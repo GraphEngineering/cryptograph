@@ -1,0 +1,23 @@
+{
+  "name": "graph-server",
+  "version": "0.0.0",
+  "description": "This is an implementation of a Graph Protocol server.",
+  "main": "index.js",
+  "dependencies": {
+    "ipfs-api": "^17.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^9.3.0",
+    "nodemon": "^1.14.11",
+    "rimraf": "^2.6.2",
+    "ts-node": "^4.1.0",
+    "typescript": "^2.6.2"
+  },
+  "scripts": {
+    "clean": "rimraf build",
+    "build": "tsc src/server.ts",
+    "dev": "nodemon"
+  },
+  "author": "",
+  "license": "ISC"
+}
