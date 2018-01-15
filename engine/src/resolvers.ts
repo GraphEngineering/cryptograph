@@ -1,21 +1,36 @@
 export default {
   Query: {
-    tokens: () => tokens
+    tokens: () => tokens,
+    token: (_, id: string) => {
+      console.log(id);
+      return tokens[parseInt(id)];
+    }
   },
-  Token: () => ({
-    name: () => null,
-    website: () => null,
-    markdown: () => null
-  })
+  Token: {
+    id: ({ id }: any) => id,
+    name: ({ id }: any) => tokens[id].name,
+    website: ({ id }: any) => tokens[id].website,
+    markdown: ({ id }: any) => tokens[id].markdown
+  }
 };
 
 const tokens = [
   {
-    name: "The Request Network",
+    name: "Request Network",
     website: "https://request.network/",
-    markdown: `
-# Request Network
-A decentralized network for payment requests
-`
+    markdown: "# Request Network\nA decentralized network for payment requests"
+  },
+  {
+    name: "Basic Attention Token",
+    website: "https://basicattentiontoken.org/",
+    markdown: null
+  },
+  {
+    name: "Golem",
+    website: "https://golem.network/",
+    markdown: null
   }
-];
+].map((token, index) => ({
+  id: `${index}`,
+  ...token
+}));

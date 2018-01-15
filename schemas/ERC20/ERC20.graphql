@@ -5,16 +5,18 @@ schema {
 
 type Query {
   tokens: [Token!]!
+  token(id: ID!): Token
 }
 
 type Token implements Node {
+  id: ID!
   name: String
   website: String
   markdown: Markdown
 }
 
 interface Node {
-  id: ID! @unique
+  id: ID!
 }
 
 interface ERC20 {

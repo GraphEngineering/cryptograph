@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
-		"strict": true,
+		"strict": false,
+		"noUnusedParameters": false,
 		"sourceMap": true,
 		"module": "commonjs",
 		"target": "es5",
