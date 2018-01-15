@@ -7,10 +7,14 @@ type Query {
   tokens: [Token!]!
 }
 
-type Token {
+type Token implements Node {
   name: String
   website: String
   markdown: Markdown
+}
+
+interface Node {
+  id: ID! @unique
 }
 
 interface ERC20 {
