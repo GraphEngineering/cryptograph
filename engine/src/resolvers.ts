@@ -1,10 +1,7 @@
 export default {
   Query: {
     tokens: () => tokens,
-    token: (_, id: string) => {
-      console.log(id);
-      return tokens[parseInt(id)];
-    }
+    token: (_: any, id: string) => tokens[parseInt(id)]
   },
   Token: {
     id: ({ id }: any) => id,
