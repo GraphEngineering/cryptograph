@@ -1,0 +1,38 @@
+schema {
+  query: Query
+  # subscriptions: Subscription
+}
+
+type Query {
+  tokens: [Token!]!
+}
+
+type Token implements ERC20 {
+  name: String
+  website: String
+  markdown: Markdown
+}
+
+interface ERC20 {
+  totalSupply: Int!
+  balanceOf(tokenOwner: Address!): Int!
+  allowance(tokenOwner: Address!, spender: Address!): Int!
+  transfer(to: Address!, tokens: Int!): Boolean!
+  approve(spender: Address!, tokens: Int!): Boolean!
+  transferFrom(from: Address!, to: Address!, tokens: Int!): Boolean!
+}
+
+# TODO:
+# type Subscription {
+# 	transfer(from: Address, to: Address, tokens: Int): Event
+# 	approval(tokenOwner: Address, spender: Address, tokens: Int): Event
+# }
+
+# TODO: https://solidity.readthedocs.io/en/develop/abi-spec.html#events
+type Event {
+  address: Address!
+}
+
+scalar Address
+
+scalar Markdown
