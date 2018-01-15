@@ -22,7 +22,7 @@
 
 # Npm Things #
 ##############
-/node_modules/
+**/node_modules/
 *.map
 
 # Logs and databases #
