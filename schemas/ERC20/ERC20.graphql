@@ -7,7 +7,7 @@ type Query {
   tokens: [Token!]!
 }
 
-type Token implements ERC20 {
+type Token {
   name: String
   website: String
   markdown: Markdown
@@ -29,9 +29,9 @@ interface ERC20 {
 # }
 
 # TODO: https://solidity.readthedocs.io/en/develop/abi-spec.html#events
-type Event {
-  address: Address!
-}
+# type Event {
+#   address: Address!
+# }
 
 scalar Address
 
