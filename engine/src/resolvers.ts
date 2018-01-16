@@ -1,13 +1,17 @@
 export default {
   Query: {
-    tokens: () => tokens,
-    token: (_: any, id: string) => tokens[parseInt(id)]
+    request: (_: any, id: string) => tokens[0]
   },
   Token: {
     id: ({ id }: any) => id,
+
     name: ({ id }: any) => tokens[id].name,
     website: ({ id }: any) => tokens[id].website,
-    markdown: ({ id }: any) => tokens[id].markdown
+    markdown: ({ id }: any) => tokens[id].markdown,
+
+    totalSupply: () => 100,
+    balanceOf: (tokenOwner: string) => 100,
+    allowance: (tokenOwner: string, spender: string) => 100
   }
 };
 

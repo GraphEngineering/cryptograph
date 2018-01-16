@@ -1,43 +1,42 @@
+# import * as ABI from "../ABI/ABI.graphql";
+
 schema {
   query: Query
-  # subscriptions: Subscription
+  mutation: Mutation
+  subscription: Subscription
 }
 
 type Query {
-  tokens: [Token!]!
-  token(id: ID!): Token
+  request: Token
 }
 
-type Token implements Node {
+type Token {
   id: ID!
+
   name: String
   website: String
   markdown: Markdown
-}
 
-interface Node {
-  id: ID!
-}
-
-interface ERC20 {
   totalSupply: Int!
   balanceOf(tokenOwner: Address!): Int!
   allowance(tokenOwner: Address!, spender: Address!): Int!
+}
+
+type Mutation {
   transfer(to: Address!, tokens: Int!): Boolean!
   approve(spender: Address!, tokens: Int!): Boolean!
   transferFrom(from: Address!, to: Address!, tokens: Int!): Boolean!
 }
 
-# TODO:
-# type Subscription {
-# 	transfer(from: Address, to: Address, tokens: Int): Event
-# 	approval(tokenOwner: Address, spender: Address, tokens: Int): Event
-# }
+type Subscription {
+  transfer(from: Address, to: Address, tokens: Int): Event
+  approval(tokenOwner: Address, spender: Address, tokens: Int): Event
+}
 
 # TODO: https://solidity.readthedocs.io/en/develop/abi-spec.html#events
-# type Event {
-#   address: Address!
-# }
+type Event {
+  address: Address!
+}
 
 scalar Address
 
