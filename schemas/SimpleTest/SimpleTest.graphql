@@ -1,8 +1,8 @@
 type Query {
-  nodes: [Node!]!
+  people: [Person!]!
 }
 
-type Node {
+type Person {
   id: ID!
   name: String!
 }

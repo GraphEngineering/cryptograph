@@ -1,10 +1,18 @@
-const nodes = [{ name: "TestNode" }].map((node, index) => ({
+const people = [
+  { name: "Aaron" },
+  { name: "Conner" },
+  { name: "Chris" },
+  { name: "Trey" },
+  { name: "Hunter" },
+  { name: "Todd" },
+  { name: "Mike" }
+].map((person, index) => ({
   id: `${index}`,
-  name: node.name + index
+  ...person
 }));
 
 export default {
   Query: {
-    nodes: () => nodes
+    people: () => people
   }
 };
