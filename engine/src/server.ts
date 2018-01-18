@@ -9,7 +9,11 @@ import { graphqlExpress, graphiqlExpress } from "apollo-server-express";
 
 import resolvers from "./resolvers";
 
-const typeDefs = fs.readFileSync("../schemas/ERC20/ERC20.graphql").toString();
+const SCHEMA = "SimpleTest";
+
+const typeDefs = fs
+  .readFileSync(`../schemas/${SCHEMA}/${SCHEMA}.graphql`)
+  .toString();
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 

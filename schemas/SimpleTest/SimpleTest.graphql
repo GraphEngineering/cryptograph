@@ -1,0 +1,12 @@
+type Query {
+  nodes: [Node!]!
+}
+
+type Node {
+  id: ID!
+  name: String!
+}
+
+# type Mutation {
+#   addNode(name: String!): Node!
+# }
