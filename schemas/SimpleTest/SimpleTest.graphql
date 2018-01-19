@@ -1,12 +1,28 @@
 type Query {
-  people: [Person!]!
+  people: [Person!]
+  person(id: ID!): Person
+
+  dogs: [Dog!]
+  dog(id: ID!): Dog
 }
 
-type Person {
+interface Node {
   id: ID!
-  name: String!
 }
 
-# type Mutation {
-#   addNode(name: String!): Node!
-# }
+type Person implements Node {
+  id: ID!
+  name: Name!
+  dogs: [Dog!]
+}
+
+type Dog implements Node {
+  id: ID!
+  name: Name!
+}
+
+type Name {
+  first: String!
+  middle: String
+  last: String
+}
