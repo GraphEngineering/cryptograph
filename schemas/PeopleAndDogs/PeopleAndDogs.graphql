@@ -1,0 +1,39 @@
+type Query {
+  people: [Person!]
+  person(id: ID!): Person
+
+  dogs: [Dog!]
+  dog(id: ID!): Dog
+}
+
+# type Mutation {
+#   adoptDog(person: ID!, dog: DogInput!): Dog
+# }
+
+# input DogInput {
+#   firstName: String!
+#   middleName: String
+#   lastName: String
+# }
+
+interface Node {
+  id: ID!
+}
+
+type Person implements Node {
+  id: ID!
+  name: Name!
+  friends: [Person!]
+  dogs: [Dog!]
+}
+
+type Dog implements Node {
+  id: ID!
+  name: Name!
+}
+
+type Name {
+  first: String!
+  middle: String
+  last: String
+}
