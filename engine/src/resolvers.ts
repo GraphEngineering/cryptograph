@@ -1,15 +1,29 @@
-import data from "./data";
+import { data, Node } from "./data";
+
+const mapToList = (map: Node): object[] =>
+  Object.keys(map).map(id => addId(id, map[id]));
+
+const addId = (id: string, object: object | null): object => ({
+  id,
+  ...object
+});
 
 export default {
   Query: {
-    people: () => data.people,
-    person: (_: any, { id }: { id: string }): object | null => data.people[id],
+    people: (): object => mapToList(data.people),
+    person: (_: any, { id }: { id: string }): object | null =>
+      addId(id, data.people[id]),
 
-    dogs: () => data.dogs,
-    dog: (_: any, { id }: { id: string }): object | null => data.dogs[id]
+    dogs: () => mapToList(data.dogs),
+    dog: (_: any, { id }: { id: string }): object | null =>
+      addId(id, data.dogs[id])
   },
   Person: {
-    dogs: ({ dogs }: { dogs: [string] }): object | null =>
-      !dogs ? null : dogs.map(id => data.dogs[id])
+    friends: ({ friends }: { friends: [string] | null }): object | null =>
+      friends &&
+      friends.map((id: string): object | null => addId(id, data.people[id])),
+
+    dogs: ({ dogs }: { dogs: [string] | null }): object | null =>
+      dogs && dogs.map((id: string): object | null => addId(id, data.dogs[id]))
   }
 };

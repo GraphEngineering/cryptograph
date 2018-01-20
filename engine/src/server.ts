@@ -8,8 +8,9 @@ import { makeExecutableSchema } from "graphql-tools";
 import { graphqlExpress, graphiqlExpress } from "apollo-server-express";
 
 import resolvers from "./resolvers";
+import { concat } from "apollo-link";
 
-const SCHEMA = "SimpleTest";
+const SCHEMA = "PeopleAndDogs";
 
 const typeDefs = fs
   .readFileSync(`../schemas/${SCHEMA}/${SCHEMA}.graphql`)

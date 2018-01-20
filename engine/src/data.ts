@@ -1,64 +1,65 @@
-interface Node {
-  [index: string]: object;
+export interface Node {
+  [id: string]: object | null;
 }
 
 const people: Node = {
-  "1": {
+  "0": {
     name: {
       first: "Conner",
       middle: "Thomas",
       last: "Ruhl"
     },
-    dogs: ["1"]
+    friends: ["1", "2", "3"],
+    dogs: ["0"]
   },
-  "2": {
+  "1": {
     name: {
       first: "Hunter",
       last: "Scheib"
     },
     dogs: ["2"]
   },
-  "3": {
+  "2": {
     name: {
       first: "Wayne",
       middle: "Dustin",
       last: "Noonan"
     },
+    friends: ["3", "4"],
     dogs: ["1"]
+  },
+  "3": {
+    name: {
+      first: "Mike"
+    },
+    friends: ["0", "2"]
   },
   "4": {
     name: {
-      first: "Mike"
-    }
-  },
-  "5": {
-    name: {
       first: "Aaron",
       last: "Donoho"
-    }
+    },
+    friends: ["2", "3"]
   }
 };
 
 const dogs: Node = {
-  "1": {
+  "0": {
     name: {
       first: "Eleanor"
     }
   },
-  "2": {
+  "1": {
     name: {
       first: "Frodo",
       last: "Porpington"
     }
   },
-  "3": {
+  "2": {
     name: {
       first: "Penny"
     }
   }
 };
 
-export default {
-  people,
-  dogs
-};
+export const data = { people, dogs };
