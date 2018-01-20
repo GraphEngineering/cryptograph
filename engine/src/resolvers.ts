@@ -9,6 +9,8 @@ export default {
     dog: (_: any, { id }: { id: string }) => data.dogs[parseInt(id)]
   },
   Person: {
+    friends: ({ friends }: { friends: [string] }) =>
+      !friends ? null : friends.map(id => data.people[parseInt(id)]),
     dogs: ({ dogs }: { dogs: [string] }) =>
       !dogs ? null : dogs.map(id => data.dogs[parseInt(id)])
   }

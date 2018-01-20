@@ -13,6 +13,7 @@ interface Node {
 type Person implements Node {
   id: ID!
   name: Name!
+  friends: [Person!]
   dogs: [Dog!]
 }
 

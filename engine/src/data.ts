@@ -5,7 +5,8 @@ const people = [
       middle: "Thomas",
       last: "Ruhl"
     },
-    dogs: ["1"]
+    friends: ["1", "2", "3"],
+    dogs: ["0"]
   },
   {
     name: {
@@ -20,18 +21,21 @@ const people = [
       middle: "Dustin",
       last: "Noonan"
     },
+    friends: ["3", "4"],
     dogs: ["1"]
   },
   {
     name: {
       first: "Mike"
-    }
+    },
+    friends: ["0", "2"]
   },
   {
     name: {
       first: "Aaron",
       last: "Donoho"
-    }
+    },
+    friends: ["2", "3"]
   }
 ];
 
