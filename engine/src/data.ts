@@ -1,5 +1,9 @@
-const people = [
-  {
+interface Node {
+  [index: string]: object;
+}
+
+const people: Node = {
+  "1": {
     name: {
       first: "Conner",
       middle: "Thomas",
@@ -7,14 +11,14 @@ const people = [
     },
     dogs: ["1"]
   },
-  {
+  "2": {
     name: {
       first: "Hunter",
       last: "Scheib"
     },
     dogs: ["2"]
   },
-  {
+  "3": {
     name: {
       first: "Wayne",
       middle: "Dustin",
@@ -22,45 +26,39 @@ const people = [
     },
     dogs: ["1"]
   },
-  {
+  "4": {
     name: {
       first: "Mike"
     }
   },
-  {
+  "5": {
     name: {
       first: "Aaron",
       last: "Donoho"
     }
   }
-];
+};
 
-const dogs = [
-  {
+const dogs: Node = {
+  "1": {
     name: {
       first: "Eleanor"
     }
   },
-  {
+  "2": {
     name: {
       first: "Frodo",
       last: "Porpington"
     }
   },
-  {
+  "3": {
     name: {
       first: "Penny"
     }
   }
-];
-
-const withIds = (nodes: object[]): object[] =>
-  nodes.map((node, index) => ({
-    id: `${index}`,
-    ...node
-  }));
+};
 
 export default {
-  people: withIds(people),
-  dogs: withIds(dogs)
+  people,
+  dogs
 };

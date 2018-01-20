@@ -3,13 +3,13 @@ import data from "./data";
 export default {
   Query: {
     people: () => data.people,
-    person: (_: any, { id }: { id: string }) => data.people[parseInt(id)],
+    person: (_: any, { id }: { id: string }): object | null => data.people[id],
 
     dogs: () => data.dogs,
-    dog: (_: any, { id }: { id: string }) => data.dogs[parseInt(id)]
+    dog: (_: any, { id }: { id: string }): object | null => data.dogs[id]
   },
   Person: {
-    dogs: ({ dogs }: { dogs: [string] }) =>
-      !dogs ? null : dogs.map(id => data.dogs[parseInt(id)])
+    dogs: ({ dogs }: { dogs: [string] }): object | null =>
+      !dogs ? null : dogs.map(id => data.dogs[id])
   }
 };
