@@ -5,10 +5,13 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 
 import { makeExecutableSchema } from "graphql-tools";
+
 import { graphqlExpress, graphiqlExpress } from "apollo-server-express";
+import { express as voyagerExpress } from "graphql-voyager/middleware";
 
 import resolvers from "./resolvers";
-import { concat } from "apollo-link";
+
+// configure base server (schema and resolvers)
 
 const SCHEMA = "PeopleAndDogs";
 
@@ -25,7 +28,17 @@ app.use("/graphql", (req, res, next) => {
   return next();
 });
 
+// configure tooling (GraphiQL and Voyager)
+
 app.use("/graphql", bodyParser.json(), graphqlExpress({ schema }));
+
 app.get("/graphiql", graphiqlExpress({ endpointURL: "/graphql" }));
+
+app.use(
+  "/voyager",
+  voyagerExpress({ endpointUrl: "/graphql", displayOptions: {} })
+);
+
+// start the app
 
 app.listen(8080);

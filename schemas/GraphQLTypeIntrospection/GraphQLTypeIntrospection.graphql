@@ -1,7 +1,3 @@
-schema {
-  query: __Schema
-}
-
 type __Schema {
   types: [__Type!]!
   queryType: __Type!

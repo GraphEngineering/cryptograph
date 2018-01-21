@@ -13,7 +13,6 @@ export default {
     people: (): object => mapToList(data.people),
     person: (_: any, { id }: { id: string }): object | null =>
       addId(id, data.people[id]),
-
     dogs: () => mapToList(data.dogs),
     dog: (_: any, { id }: { id: string }): object | null =>
       addId(id, data.dogs[id])
@@ -22,7 +21,6 @@ export default {
     friends: ({ friends }: { friends: [string] | null }): object | null =>
       friends &&
       friends.map((id: string): object | null => addId(id, data.people[id])),
-
     dogs: ({ dogs }: { dogs: [string] | null }): object | null =>
       dogs && dogs.map((id: string): object | null => addId(id, data.dogs[id]))
   }
