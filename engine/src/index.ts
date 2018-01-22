@@ -6,14 +6,14 @@ import * as bodyParser from "body-parser";
 import { graphqlExpress, graphiqlExpress } from "apollo-server-express";
 import { express as voyagerExpress } from "graphql-voyager/middleware";
 
-import { sourceToSchema } from "./resolvers";
+import schemaFromSource from "./schemaFromSource";
 
 // configure base server (schema and resolvers)
 
 const SCHEMA_NAME = "HelloWorld";
 const SCHEMA_PATH = `../schemas/${SCHEMA_NAME}`;
 
-const schema = sourceToSchema(
+const schema = schemaFromSource(
   readFileSync(`${SCHEMA_PATH}/schema.graphql`).toString()
 );
 
