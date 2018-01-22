@@ -3,29 +3,19 @@ import { readFileSync } from "fs";
 import * as express from "express";
 import * as bodyParser from "body-parser";
 
-import { makeExecutableSchema } from "graphql-tools";
-
 import { graphqlExpress, graphiqlExpress } from "apollo-server-express";
 import { express as voyagerExpress } from "graphql-voyager/middleware";
 
-import schemaToJson from "./schemaToJson";
-import { jsonToResolvers } from "./resolvers";
+import { sourceToSchema } from "./resolvers";
 
 // configure base server (schema and resolvers)
 
 const SCHEMA_NAME = "HelloWorld";
 const SCHEMA_PATH = `../schemas/${SCHEMA_NAME}`;
 
-const typeDefs = readFileSync(`${SCHEMA_PATH}/schema.graphql`).toString();
-const schemaJson = schemaToJson(SCHEMA_PATH);
-const resolvers = jsonToResolvers(schemaJson);
-
-console.log(resolvers);
-
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers
-});
+const schema = sourceToSchema(
+  readFileSync(`${SCHEMA_PATH}/schema.graphql`).toString()
+);
 
 const app = express();
 
