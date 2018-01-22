@@ -1,5 +1,4 @@
-import * as fs from "fs";
-import * as path from "path";
+import { readFileSync } from "fs";
 
 import * as express from "express";
 import * as bodyParser from "body-parser";
@@ -9,17 +8,22 @@ import { makeExecutableSchema } from "graphql-tools";
 import { graphqlExpress, graphiqlExpress } from "apollo-server-express";
 import { express as voyagerExpress } from "graphql-voyager/middleware";
 
-import resolvers from "./resolvers";
+import schemaToJson from "./schemaToJson";
+import { jsonToResolvers } from "./resolvers";
 
 // configure base server (schema and resolvers)
 
-const SCHEMA = "PeopleAndDogs";
+const SCHEMA_NAME = "HelloWorld";
+const SCHEMA_PATH = `../schemas/${SCHEMA_NAME}`;
 
-const typeDefs = fs
-  .readFileSync(`../schemas/${SCHEMA}/${SCHEMA}.graphql`)
-  .toString();
+const typeDefs = readFileSync(`${SCHEMA_PATH}/schema.graphql`).toString();
+const schemaJson = schemaToJson(SCHEMA_PATH);
+const resolvers = jsonToResolvers(schemaJson);
 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers
+});
 
 const app = express();
 
@@ -28,9 +32,9 @@ app.use("/graphql", (req, res, next) => {
   return next();
 });
 
-// configure tooling (GraphiQL and Voyager)
-
 app.use("/graphql", bodyParser.json(), graphqlExpress({ schema }));
+
+// configure tooling (GraphiQL and Voyager)
 
 app.get("/graphiql", graphiqlExpress({ endpointURL: "/graphql" }));
 

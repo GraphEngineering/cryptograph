@@ -2,7 +2,7 @@
   "name": "graph-server",
   "version": "0.0.0",
   "description": "This is an implementation of a Graph Protocol server.",
-  "main": "index.js",
+  "main": "build/index.js",
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
@@ -21,7 +21,7 @@
   },
   "scripts": {
     "clean": "rimraf build",
-    "build": "tsc src/server.ts",
+    "build": "tsc src/index.ts",
     "dev": "nodemon"
   },
   "author": "",
