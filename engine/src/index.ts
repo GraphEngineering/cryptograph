@@ -20,6 +20,8 @@ const typeDefs = readFileSync(`${SCHEMA_PATH}/schema.graphql`).toString();
 const schemaJson = schemaToJson(SCHEMA_PATH);
 const resolvers = jsonToResolvers(schemaJson);
 
+console.log(resolvers);
+
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers
