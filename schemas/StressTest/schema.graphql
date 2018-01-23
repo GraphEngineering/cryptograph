@@ -1,0 +1,18 @@
+type Query {
+  booleans: [Boolean!]
+  floats: [Float!]
+  ids: [ID!]
+  ints: [Int!]
+  strings: [String!]
+
+  object: Object
+}
+
+type Object {
+  enum: ENUM
+}
+
+enum ENUM {
+  FIRST
+  SECOND
+}

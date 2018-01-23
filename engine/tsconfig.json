@@ -4,8 +4,9 @@
     "sourceMap": true,
     "typeRoots": ["node_modules/@types"],
     "module": "commonjs",
-    "target": "es5",
-    "lib": ["es2015"],
+    "target": "es2017",
+    "lib": ["es2017"],
     "outDir": "./build"
-  }
+  },
+  "exclude": ["node_modules"]
 }

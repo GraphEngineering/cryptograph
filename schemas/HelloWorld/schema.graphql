@@ -1,5 +1,0 @@
-type Query {
-  id: ID!
-  message: String!
-  dabs: Int!
-}

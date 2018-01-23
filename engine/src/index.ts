@@ -1,16 +1,16 @@
 import { readFileSync } from "fs";
 
-import * as express from "express";
 import * as bodyParser from "body-parser";
+import * as express from "express";
 
-import { graphqlExpress, graphiqlExpress } from "apollo-server-express";
+import { graphiqlExpress, graphqlExpress } from "apollo-server-express";
 import { express as voyagerExpress } from "graphql-voyager/middleware";
 
-import { sourceToSchema } from "./resolvers";
+import { sourceToSchema } from "./schema";
 
 // configure base server (schema and resolvers)
 
-const SCHEMA_NAME = "HelloWorld";
+const SCHEMA_NAME = "StressTest";
 const SCHEMA_PATH = `../schemas/${SCHEMA_NAME}`;
 
 const schema = sourceToSchema(

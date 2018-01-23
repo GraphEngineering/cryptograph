@@ -1,0 +1,7 @@
+{
+  "extends": ["tslint:latest", "tslint-config-prettier"],
+  "rules": {
+    "no-unused-variable": [true, { "ignore-pattern": "^_" }],
+    "no-submodule-imports": [true, "graphql-voyager/middleware"]
+  }
+}

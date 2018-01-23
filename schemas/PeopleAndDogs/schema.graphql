@@ -6,16 +6,6 @@ type Query {
   dog(id: ID!): Dog
 }
 
-# type Mutation {
-#   adoptDog(person: ID!, dog: DogInput!): Dog
-# }
-
-# input DogInput {
-#   firstName: String!
-#   middleName: String
-#   lastName: String
-# }
-
 interface Node {
   id: ID!
 }
