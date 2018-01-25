@@ -1,3 +1,12 @@
 type Query {
-    message: String!
+    FileLocations: [FileLocation!]
+    FileLocation(id: ID): FileLocation!
+}
+
+interface Node {
+  id: ID!
+}
+
+type FileLocation implements Node {
+    location: IpfsCid!
 }
