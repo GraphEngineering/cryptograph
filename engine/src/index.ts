@@ -8,9 +8,11 @@ import { express as voyagerExpress } from "graphql-voyager/middleware";
 
 import { sourceToSchema } from "./schema";
 
+// import * as ipfsApi from "ipfs-api";
+
 // configure base server (schema and resolvers)
 
-const SCHEMA_NAME = "StressTest";
+const SCHEMA_NAME = "MyTest";
 const SCHEMA_PATH = `../schemas/${SCHEMA_NAME}`;
 
 const schema = sourceToSchema(
