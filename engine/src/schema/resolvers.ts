@@ -8,7 +8,7 @@ import {
   GraphQLEnumType
 } from "graphql";
 
-import  { IpfsCid } from "./customTypes"
+import { ipfsCid } from "./data"
 
 type Resolver<TSource> = (
   type: TSource,
@@ -22,7 +22,7 @@ type LeafResolver = Resolver<any>;
 type EnumResolver = Resolver<any>;
 type ScalarResolver = Resolver<any>;
 type PrimitiveResolver = Resolver<any>;
-type IpfsResolver = Resolver<IpfsCid>;
+type IpfsResolver = Resolver<any>;
 
 export const fieldResolver: FieldResolver = (type, field) => {
   if (type instanceof GraphQLNonNull) {
@@ -67,8 +67,10 @@ const primitiveResolvers: {
   Float: () => 12.34,
   ID: () => "ID",
   Int: () => 1234,
-  String: () => "Hello, World!",
-  IpfsCid: () => "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg"
+  String: () => "Hello, World!"//,
+  // IpfsCid: () => "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg"
 };
 
 export const primitiveNames = Object.keys(primitiveResolvers);
+
+const myResolver = { IpfsCid: ipfsCid => ipfsCid.content };
