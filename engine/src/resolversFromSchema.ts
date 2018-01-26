@@ -49,7 +49,9 @@ const resolver = (
 
 const listResolver = (
   itemResolver: GraphQLFieldResolver<GraphQLOutputType, any>
-): any => (...args) => [itemResolver(...args)];
+): GraphQLFieldResolver<any, any> => (source, args, context, info) => [
+  itemResolver(source, args, context, info)
+];
 
 const abstractTypeResolver = (
   type: GraphQLAbstractType
