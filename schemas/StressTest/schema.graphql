@@ -5,6 +5,8 @@ type Query {
   ints: [Int!]
   strings: [String!]
 
+  customScalar: Scalar
+
   object: Object
 }
 
@@ -16,3 +18,5 @@ enum ENUM {
   FIRST
   SECOND
 }
+
+scalar Scalar

@@ -3,38 +3,50 @@ import { readFileSync } from "fs";
 import * as bodyParser from "body-parser";
 import * as express from "express";
 
-import { graphiqlExpress, graphqlExpress } from "apollo-server-express";
+import * as graphqlHTTP from "express-graphql";
+import { buildSchema } from "graphql";
+
 import { express as voyagerExpress } from "graphql-voyager/middleware";
 
-import { sourceToSchema } from "./schema";
+import resolversFromSchema from "./resolversFromSchema";
 
-// configure base server (schema and resolvers)
+// configure schema middleware
 
-const SCHEMA_NAME = "StressTest";
+const SCHEMA_NAME = "PeopleAndDogs";
 const SCHEMA_PATH = `../schemas/${SCHEMA_NAME}`;
 
-const schema = sourceToSchema(
-  readFileSync(`${SCHEMA_PATH}/schema.graphql`).toString()
-);
+const source = readFileSync(`${SCHEMA_PATH}/schema.graphql`).toString();
+const schema = buildSchema(source);
+
+const resolvers = resolversFromSchema(schema);
+
+const schemaMiddleware = graphqlHTTP({
+  graphiql: true,
+  rootValue: resolvers,
+  schema
+});
+
+// configure graphQL api
 
 const app = express();
 
-app.use("/graphql", (req, res, next) => {
+const headerMiddleware: express.RequestHandler = (_req, res, next) => {
   res.contentType("application/json");
   return next();
-});
+};
 
-app.use("/graphql", bodyParser.json(), graphqlExpress({ schema }));
+app.use("/graphql", bodyParser.json(), headerMiddleware, schemaMiddleware);
 
-// configure tooling (GraphiQL and Voyager)
-
-app.get("/graphiql", graphiqlExpress({ endpointURL: "/graphql" }));
+// configure voyager
 
 app.use(
   "/voyager",
-  voyagerExpress({ endpointUrl: "/graphql", displayOptions: {} })
+  voyagerExpress({
+    displayOptions: {},
+    endpointUrl: "/graphql"
+  })
 );
 
-// start the app
+// start the server
 
 app.listen(8080);
