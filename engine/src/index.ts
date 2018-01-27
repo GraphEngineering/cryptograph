@@ -38,9 +38,6 @@ express()
   .use("/graphiql", graphiqlExpress({ endpointURL: "/graphql" }))
   .use(
     "/voyager",
-    voyagerExpress({
-      displayOptions: {},
-      endpointUrl: "/graphql"
-    })
+    voyagerExpress({ displayOptions: {}, endpointUrl: "/graphql" })
   )
   .listen(8080);

@@ -1,6 +1,7 @@
 import {
   GraphQLAbstractType,
   GraphQLEnumType,
+  GraphQLEnumValue,
   GraphQLField,
   GraphQLFieldResolver,
   GraphQLLeafType,
@@ -88,17 +89,19 @@ const leafTypeResolver = (resolveType: GraphQLLeafType): Resolver =>
     : scalarResolver(resolveType) || (() => `<${resolveType.name}>`);
 
 interface IEnumResolver {
-  [enumValue: string]: number | string;
+  [enumValue: string]: string;
 }
 
 const enumResolver = (enumType: GraphQLEnumType): IEnumResolver =>
-  enumType.getValues().reduce(
-    (enumValues, value) => ({
-      [value.name]: value.value,
-      ...enumValues
-    }),
-    {}
-  );
+  enumType.getValues().reduce(attachEnumResolver, {});
+
+const attachEnumResolver = (
+  enumValues: IEnumResolver,
+  value: GraphQLEnumValue
+) => ({
+  [value.name]: value.value,
+  ...enumValues
+});
 
 const scalarResolver = (
   scalarType: GraphQLScalarType
