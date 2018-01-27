@@ -15,44 +15,39 @@ import {
   isLeafType
 } from "graphql";
 
-export default (
-  schema: GraphQLSchema
-): { [typeName: string]: GraphQLFieldResolver<any, any> } =>
-  Object.values(schema.getTypeMap()).reduce(attachTypeResolver, {});
-
-interface ITypeResolvers {
+interface Resolvers {
   [typeName: string]: Resolver;
 }
 
-type Resolver =
-  | GraphQLFieldResolver<GraphQLNamedType, any>
-  | IEnumResolver
-  | {};
+type Resolver = GraphQLFieldResolver<any, any> | IEnumResolver;
 
-interface IFieldResolvers {
-  [fieldName: string]: GraphQLFieldResolver<any, any>;
+interface FieldResolvers {
+  [fieldName: string]: Resolver;
 }
 
+export default (schema: GraphQLSchema): Resolvers =>
+  Object.values(schema.getTypeMap()).reduce(attachTypeResolver, {});
+
 const attachTypeResolver = (
-  typeResolvers: ITypeResolvers,
+  typeResolvers: Resolvers,
   resolveType: GraphQLNamedType
-): ITypeResolvers =>
+): Resolvers =>
   resolveType instanceof GraphQLObjectType && !resolveType.name.startsWith("__")
     ? {
-        ...typeResolvers,
         [resolveType.name]: Object.values(resolveType.getFields()).reduce(
           attachFieldResolver,
           {}
-        )
+        ),
+        ...typeResolvers
       }
     : typeResolvers;
 
 const attachFieldResolver = (
-  fieldResolvers: IFieldResolvers,
+  fieldResolvers: FieldResolvers,
   field: GraphQLField<any, any>
-): IFieldResolvers => ({
-  ...fieldResolvers,
-  [field.name]: resolver(field, field.type)
+): FieldResolvers => ({
+  [field.name]: resolver(field, field.type),
+  ...fieldResolvers
 });
 
 const resolver = (
@@ -67,11 +62,21 @@ const resolver = (
         ? abstractTypeResolver(resolveType)
         : isLeafType(resolveType) ? leafTypeResolver(resolveType) : () => ({});
 
-const listResolver = (
-  itemResolver: GraphQLFieldResolver<GraphQLOutputType, any>
-): GraphQLFieldResolver<any, any> => (source, args, context, info) => [
-  itemResolver(source, args, context, info)
+const listResolver = (elementResolver: Resolver): Resolver => (
+  source,
+  args,
+  context,
+  info
+) => [
+  isExecutableResolver(elementResolver)
+    ? elementResolver(source, args, context, info)
+    : elementResolver
 ];
+
+const isExecutableResolver = (
+  typeResolver: Resolver
+): typeResolver is GraphQLFieldResolver<any, any> =>
+  typeof typeResolver === "function";
 
 const abstractTypeResolver = (
   resolveType: GraphQLAbstractType
@@ -86,9 +91,14 @@ interface IEnumResolver {
   [enumValue: string]: number | string;
 }
 
-const enumResolver = (enumType: GraphQLEnumType): IEnumResolver => ({
-  [enumType.getValues()[0].value]: enumType.getValues()[0].value
-});
+const enumResolver = (enumType: GraphQLEnumType): IEnumResolver =>
+  enumType.getValues().reduce(
+    (enumValues, value) => ({
+      [value.name]: value.value,
+      ...enumValues
+    }),
+    {}
+  );
 
 const scalarResolver = (
   scalarType: GraphQLScalarType
@@ -107,8 +117,6 @@ const primitiveScalarResolvers: {
   Int: () => 1234,
   String: () => "Hello, World!"
 };
-
-// const primitiveScalarTypeNames = Object.keys(primitiveScalarResolvers);
 
 export const customScalarResolver = (
   scalarType: GraphQLScalarType
