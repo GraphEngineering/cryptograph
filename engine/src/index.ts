@@ -11,15 +11,15 @@ import { express as voyagerExpress } from "graphql-voyager/middleware";
 
 import resolversFromSchema from "./resolversFromSchema";
 
-const SCHEMA_NAME = "StressTest";
+const SCHEMA_NAME = "PeopleAndDogs";
 const SCHEMA_PATH = `../schemas/${SCHEMA_NAME}`;
 
 const source = readFileSync(`${SCHEMA_PATH}/schema.graphql`).toString();
 const ast = parse(source);
 const schema = buildASTSchema(ast);
 
-// required since `makeExecutableSchema` has `resolvers` as an optional field
-const resolvers: any | undefined = resolversFromSchema(schema);
+// `any` since `makeExecutableSchema` has `resolvers` as an optional field
+const resolvers: any = resolversFromSchema(schema);
 
 const schemaMiddleware = graphqlExpress({
   schema: makeExecutableSchema({
@@ -33,11 +33,15 @@ const headerMiddleware: express.RequestHandler = (_req, res, next) => {
   return next();
 };
 
+const graphiqlMiddleware = graphiqlExpress({ endpointURL: "/graphql" });
+
+const voyagerMiddleware = voyagerExpress({
+  displayOptions: {},
+  endpointUrl: "/graphql"
+});
+
 express()
   .use("/graphql", bodyParser.json(), headerMiddleware, schemaMiddleware)
-  .use("/graphiql", graphiqlExpress({ endpointURL: "/graphql" }))
-  .use(
-    "/voyager",
-    voyagerExpress({ displayOptions: {}, endpointUrl: "/graphql" })
-  )
+  .use("/graphiql", graphiqlMiddleware)
+  .use("/voyager", voyagerMiddleware)
   .listen(8080);

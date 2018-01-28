@@ -20,7 +20,11 @@ interface Resolvers {
   [typeName: string]: Resolver;
 }
 
-type Resolver = GraphQLFieldResolver<any, any> | IEnumResolver;
+type Resolver = GraphQLFieldResolver<any, any> | EnumResolver;
+
+interface EnumResolver {
+  [enumValue: string]: string;
+}
 
 interface FieldResolvers {
   [fieldName: string]: Resolver;
@@ -88,15 +92,11 @@ const leafTypeResolver = (resolveType: GraphQLLeafType): Resolver =>
     ? enumResolver(resolveType)
     : scalarResolver(resolveType) || (() => `<${resolveType.name}>`);
 
-interface IEnumResolver {
-  [enumValue: string]: string;
-}
-
-const enumResolver = (enumType: GraphQLEnumType): IEnumResolver =>
+const enumResolver = (enumType: GraphQLEnumType): EnumResolver =>
   enumType.getValues().reduce(attachEnumResolver, {});
 
 const attachEnumResolver = (
-  enumValues: IEnumResolver,
+  enumValues: EnumResolver,
   value: GraphQLEnumValue
 ) => ({
   [value.name]: value.value,

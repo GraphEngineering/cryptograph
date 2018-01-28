@@ -1,0 +1,49 @@
+type Query {
+  group(id: ID!): Group
+  groups: [Group!]
+
+  light(id: ID!): Light
+  lights: [Light!]
+}
+
+type Mutation {
+  addLight(light: LightInput, color: ColorInput): Light!
+}
+
+input LightInput {
+  name: String
+  on: Boolean
+  color: ColorInput
+}
+
+input ColorInput {
+  red: Int!
+  green: Int!
+  blue: Int!
+  alpha: Float
+}
+
+interface Node {
+  id: ID!
+}
+
+type Group implements Node {
+  id: ID!
+  name: String
+
+  lights: [Light!]
+}
+
+type Light implements Node {
+  id: ID!
+  name: String
+  on: Boolean!
+  color: Color!
+}
+
+type Color {
+  red: Int!
+  green: Int!
+  blue: Int!
+  alpha: Float
+}
