@@ -1,0 +1,54 @@
+type Query {
+  group(id: ID!): Group
+  groups: [Group!]
+
+  speaker(id: ID!): Speaker
+  speakers: [Speaker!]
+}
+
+type Mutation {
+  addSpeaker(speaker: SpeakerInput, sound: SoundInput, equalizers: [EqualizerInput!]): Sound!
+}
+
+input SpeakerInput {
+    name: String
+    on: Boolean
+    sound: SoundInput
+}
+
+input SoundInput {
+    volume: Int
+    equalizers: [EqualizerInput!] 
+}
+
+input EqualizerInput {
+    frequency: Float!
+    boost: Int!
+}
+
+interface Node {
+    id: ID!
+}
+
+type Group implements Node {
+    id: ID!
+    name: String
+    speakers: [Speaker!]
+}
+
+type Speaker implements Node {
+    id: ID!
+    name: String
+    on: Boolean!
+    sound: Sound!
+}
+
+type Sound {
+    volume: Int!
+    equalizers: [Equalizer!]
+}
+
+type Equalizer {
+    frequency: Int!
+    boost: Float!
+}
