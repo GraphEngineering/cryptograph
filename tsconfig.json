@@ -1,3 +1,7 @@
 {
-  "extends": "./engine/tsconfig"
+  "extends": "./node_modules/@cryptograph/typescript-tooling/tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "dist"
+  }
 }

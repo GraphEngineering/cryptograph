@@ -1,0 +1,9 @@
+{
+  "rules": {
+    "no-submodule-imports": [
+      true,
+      "graphql-voyager/middleware"
+    ]
+  },
+  "extends": "./node_modules/@cryptograph/typescript-tooling/tslint.json"
+}
