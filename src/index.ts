@@ -1,31 +1,40 @@
+import * as fs from "fs";
+
 import express from "express";
 import * as bodyParser from "body-parser";
 
 import { makeExecutableSchema } from "graphql-tools";
-import { graphqlExpress } from "apollo-server-express";
+import { graphqlExpress, graphiqlExpress } from "apollo-server-express";
 
-import expressPlayground from "graphql-playground-middleware-express";
+import { resolvers } from "./Graph/LifeMomentum/Resolvers";
 
-const schema = makeExecutableSchema({
-  typeDefs: `
-    type Query {
-      hello: String!
-    }
-  `,
-  resolvers: {
-    Query: {
-      hello: () => "world"
-    }
-  }
-});
+const typeDefs = fs
+  .readFileSync("./src/Graph/LifeMomentum/Schema/Main.graphql")
+  .toString();
 
 const PORT = 4000;
 
 const app = express();
 
-app.use("/graph", bodyParser.json(), graphqlExpress({ schema }));
-app.get("/playground", expressPlayground({ endpoint: "/graph" }));
+app.use(
+  "/graphql",
+  bodyParser.json(),
+  graphqlExpress({
+    tracing: true,
+    schema: makeExecutableSchema({
+      typeDefs,
+      resolvers
+    })
+  })
+);
 
-app.listen(4000);
+app.get(
+  "/graphiql",
+  graphiqlExpress({
+    endpointURL: "/graphql"
+  })
+);
 
-console.log(` http://localhost:${PORT}/playground`);
+app.listen(PORT);
+
+console.log(`http://localhost:${PORT}/playground`);
