@@ -1,3 +1,30 @@
 type Query {
-  hello: String!
+  goals: [Goal!]!
+}
+
+interface Node {
+  id: ID!
+  createdAt: DateTime!
+}
+
+scalar DateTime
+
+type Goal implements Node {
+  id: ID!
+  createdAt: DateTime!
+
+  title: String!
+  advancements: [Movement!]!
+}
+
+type Movement implements Node {
+  id: ID!
+  createdAt: DateTime!
+
+  direction: Direction!
+}
+
+enum Direction {
+  BACKWARD
+  FORWARD
 }
