@@ -1,6 +1,8 @@
 {
   "extends": "./node_modules/@cryptograph/typescript-tooling/tslint.json",
   "rules": {
-    "no-console": false
+    "no-console": false,
+    "no-implicit-dependencies": false,
+    "no-submodule-imports": [true, "~"]
   }
 }

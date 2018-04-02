@@ -2,6 +2,11 @@ type Query {
   goals: [Goal!]!
 }
 
+type Mutation {
+  setNewGoal(title: String!): Goal!
+  newMovementForGoal(goal: ID!, direction: Direction!): Movement
+}
+
 interface Node {
   id: ID!
   createdAt: DateTime!
@@ -14,7 +19,7 @@ type Goal implements Node {
   createdAt: DateTime!
 
   title: String!
-  advancements: [Movement!]!
+  movements: [Movement!]!
 }
 
 type Movement implements Node {

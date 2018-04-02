@@ -37,4 +37,4 @@ app.get(
 
 app.listen(PORT);
 
-console.log(`http://localhost:${PORT}/playground`);
+console.log(`http://localhost:${PORT}/graphiql`);

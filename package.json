@@ -10,7 +10,8 @@
     "express": "^4.16.3",
     "fs": "0.0.1-security",
     "graphql": "^0.13.2",
-    "graphql-tools": "^2.23.1"
+    "graphql-tools": "^2.23.1",
+    "redux": "^3.7.2"
   },
   "devDependencies": {
     "@cryptograph/typescript-tooling": "^1.0.5",
@@ -19,13 +20,14 @@
     "nodemon": "^1.14.11",
     "rimraf": "^2.6.2",
     "ts-node": "^4.1.0",
+    "tsconfig-paths": "^3.2.0",
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.7.0",
     "typescript": "^2.7.1"
   },
   "scripts": {
     "clean": "rimraf dist",
-    "build": "tsc",
+    "build": "tsc --skipLibCheck",
     "dev": "nodemon"
   },
   "author": "CryptoGraph",
