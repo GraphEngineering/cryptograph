@@ -3,8 +3,8 @@ type Query {
 }
 
 type Mutation {
-  setNewGoal(title: String!): Goal!
-  newMovementForGoal(goal: ID!, direction: Direction!): Movement
+  createGoal(title: String!): Goal
+  createMovement(goalId: ID!, direction: Direction!): Movement
 }
 
 interface Node {

@@ -1,7 +1,6 @@
 {
   "extends": "./node_modules/@cryptograph/typescript-tooling/tsconfig.json",
   "include": ["src/**/*"],
-  // "exclude": ["node_modules", "dist"],
   "compilerOptions": {
     "declaration": true,
     "moduleResolution": "node",

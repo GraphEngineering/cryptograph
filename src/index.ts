@@ -20,7 +20,7 @@ app.use(
   "/graphql",
   bodyParser.json(),
   graphqlExpress({
-    tracing: true,
+    // tracing: true,
     schema: makeExecutableSchema({
       typeDefs,
       resolvers

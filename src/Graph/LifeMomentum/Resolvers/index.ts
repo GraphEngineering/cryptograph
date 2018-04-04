@@ -1,25 +1,49 @@
-import { store } from "~/State";
+import { State, Goal, Movement, Direction } from "./types";
+
+const state: State = {
+  goals: []
+};
 
 export const resolvers = {
   Query: {
-    goals: () => []
+    goals: () => state.goals
   },
+
   Mutation: {
-    setNewGoal: (_parent: never, { title }: { title: string }) => {
-      store.dispatch({
-        type: "Mutation",
-        arguments: { title }
-      });
+    createGoal: (_parent: never, { title }: { title: string }) => {
+      const goal = {
+        id: state.goals.length.toString(),
+        createdAt: new Date(),
+
+        title,
+        movements: []
+      };
+
+      state.goals.push(goal);
+
+      return goal;
     },
 
-    newMovementForGoal: (
+    createMovement: (
       _parent: never,
-      { direction }: { goal: string; direction: string }
-    ) => ({
-      id: "1",
-      createdAt: new Date(),
+      { goalId, direction }: { goalId: string; direction: Direction }
+    ) => {
+      const goal = state.goals.filter(({ id }) => id === goalId)[0];
 
-      direction
-    })
+      if (!goal) {
+        return null;
+      }
+
+      const movement = {
+        id: "1",
+        createdAt: new Date(),
+
+        direction
+      };
+
+      goal.movements.push(movement);
+
+      return movement;
+    }
   }
 };
