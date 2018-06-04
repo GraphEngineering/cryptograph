@@ -2,6 +2,8 @@
   "extends": "./node_modules/@cryptograph/typescript-tooling/tsconfig.json",
   "include": ["src/**/*"],
   "compilerOptions": {
+    "target": "es2018",
+    "lib": ["es2018"],
     "declaration": true,
     "moduleResolution": "node",
     "outDir": "dist",

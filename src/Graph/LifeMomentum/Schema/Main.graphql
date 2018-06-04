@@ -1,35 +1,10 @@
 type Query {
-  goals: [Goal!]!
+  message: String!
+  goals: [Goal]!
+  goal(id: ID!): Goal
 }
 
-type Mutation {
-  createGoal(title: String!): Goal
-  createMovement(goalId: ID!, direction: Direction!): Movement
-}
-
-interface Node {
+type Goal {
   id: ID!
-  createdAt: DateTime!
-}
-
-scalar DateTime
-
-type Goal implements Node {
-  id: ID!
-  createdAt: DateTime!
-
-  title: String!
-  movements: [Movement!]!
-}
-
-type Movement implements Node {
-  id: ID!
-  createdAt: DateTime!
-
-  direction: Direction!
-}
-
-enum Direction {
-  BACKWARD
-  FORWARD
+  description: String!
 }

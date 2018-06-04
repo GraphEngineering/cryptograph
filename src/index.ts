@@ -12,15 +12,13 @@ const typeDefs = fs
   .readFileSync("./src/Graph/LifeMomentum/Schema/Main.graphql")
   .toString();
 
-const PORT = 4000;
-
 const app = express();
 
 app.use(
   "/graphql",
   bodyParser.json(),
   graphqlExpress({
-    // tracing: true,
+    tracing: true,
     schema: makeExecutableSchema({
       typeDefs,
       resolvers
@@ -35,6 +33,6 @@ app.get(
   })
 );
 
-app.listen(PORT);
+app.listen(4000);
 
 console.log(`http://localhost:${PORT}/graphiql`);
