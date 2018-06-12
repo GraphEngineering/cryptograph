@@ -1,11 +1,3 @@
 {
-  "extends": "./node_modules/@cryptograph/typescript-tooling/tslint.json",
-  "rules": {
-    "no-console": false,
-
-    // TODO: remove when whitelist is implemented
-    "no-implicit-dependencies": false,
-
-    "no-submodule-imports": [true, "~"]
-  }
+  "extends": "./node_modules/typescript-tooling/dist/DefaultConfigs/tslint.json"
 }
